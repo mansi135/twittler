@@ -1,0 +1,35 @@
+body {
+  background-color: #3CB371;
+  margin: 20px;
+  padding: 0px;
+  text-align: center;
+  font: Helvetica;
+} 
+
+div {
+  background-color: #FFFF10;
+  margin: 20px;
+  padding: 20px;
+  border-style: double;
+  border-width: 2px;
+  border-color: red;
+  width: 600px;
+  margin-left: 25%;
+} 
+
+h1 {
+  text-align: left;
+  font: italic;
+}
+
+button {
+    background-color: #f00800; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 150px;
+}

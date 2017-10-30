@@ -38,6 +38,7 @@ var randomMessage = function(){
 };
 
 // generate random tweets on a random schedule
+
 var generateRandomTweet = function(){
   var tweet = {};
   tweet.user = randomElement(users);

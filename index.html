@@ -3,22 +3,43 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="myTwittlerStyle.css">
   </head>
   <body>
+    <h1>Twittler!</h1>
+    <button type="button">New Tweets!</button> 
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        //$body.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
+       // var $newTweetsButton = $('<input type="button" value="newButton"/>');
+       // $newTweetsButton.appendTo($('body'));
+
+        function appendOneTweet(i){
+          var tweet = streams.home[i];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + '\n' + tweet.created_at);
+          $tweet.html($tweet.html().replace(/\n/g,'<br/>'));
           $tweet.appendTo($body);
-          index -= 1;
         }
+
+        var i = 0;
+        while(i <= streams.home.length - 1){
+          appendOneTweet(i);
+          i += 1;
+        }
+
+        var lastIndex = i;
+        var checkAndUpdate = function() {
+          for(var j = lastIndex; j < streams.home.length - 1; j++) {
+            appendOneTweet(j);
+          }
+          lastIndex = j;
+        }
+
+        setInterval(checkAndUpdate,1000);
 
       });
 
