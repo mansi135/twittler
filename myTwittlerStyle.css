@@ -1,58 +1,71 @@
 body {
-  background-color: #87cefa;
+  background-color: #add8e6;
   text-align: center;
   font: Helvetica;
 } 
 
 
 div {
-  margin: 10px;
   padding: 6px;
+  border: solid;
+  border-color: black;
   border-radius: 5px;
-  width: 600px;
-  height: 30px;
-  margin-left: 25%;
+  width: 1000px;
+  height: 40px;
+  margin-left: 20%;
 } 
 
-div.shawndrost {
-  background-color: #FFFF10;
+/*
+div.shawndrost{
+  background-color: green;
 }
 
-div.sharksforcheap {
-  background-color: #FFC0CB;
+div.sharksforcheap{
+  background-color: blue;
 }
 
-div.mracus {
-  background-color: #00FFFF;
+div.mracus{
+  background-color: yellow;
 }
 
-div.douglascalhoun {
-  background-color: #808000;
-}
+div.douglascalhoun{
+  background-color: pink;
+}*/
 
 .username {
   cursor: pointer;
   text-decoration: underline;
 }
 
+.username:hover {
+  color: #0000ff;
+}
 
+.individual {
+  color: blue;
+  font-weight: bold;
+  font-size: 35px;
+  margin: 20px;
+  text-align: center;
+
+}
 
 h1 {
-  text-align: left;
+  margin-top: 4%;
   font: italic;
 }
 
 button {
     cursor: pointer;
     border: none;
-    color: black;
+    color: #ffffff;
+    background-color: #66ccff;
     padding: 10px 10px;
-    text-align: left;
+    text-align: center;
     text-decoration: underline;
-    display: inline-block;
+    border-radius: 5px;
     font-size: 16px;
-    font-style: italic;
     font-weight: bold;
     height: 50px;
-    float: left;
+    margin: 20px;
 }

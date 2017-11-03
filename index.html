@@ -7,19 +7,14 @@
   </head>
   <body>
 
-    <h1>Twittler!</h1>
+    <header><h1>Twittler!</h1></header>
     <button id="new-tweets" type="button">Show Newer Tweets..</button>
     <button id="back" type="button">Back To All Users</button>
-
+    
 
     <script>
-
-        // correct timestamps
-        // reverse chrono
-        // formatting of each div
-        var $body = $('body');
-        var lastIndex;
-        
+  
+        var $body = $('body');        
 
         var appendOneTweet =function (i){       
           var tweet = streams.home[i];
@@ -29,19 +24,16 @@
         }
 
         var initialTweets = function() {
-          var i = 0;
-          while(i <= streams.home.length - 1){
-            appendOneTweet(i);
-            i += 1;
+          for(var i = streams.home.length - 1; i >= 0; i--){
+            appendOneTweet(i);            
           }
-          lastIndex = i;
         }       
 
         var checkAndUpdate = function() {
-          for(var j = lastIndex; j < streams.home.length - 1; j++) {
-            appendOneTweet(j);
+          $('div').remove();
+          for(var i = streams.home.length - 1; i >= 0; i--){
+            appendOneTweet(i);            
           }
-          lastIndex = j;
         }
 
       $(document).ready(function(){
@@ -55,9 +47,10 @@
 
           
           $(document).on('click','.username',function(event) {
-            
-            
+                       
             var p = $(event.target).parent().attr("class");
+            $body.append("<p class='individual'>" + p + "'s timeline...</p>");
+
             $body.append($('div').filter(function() {
               return $(this).attr("class") === p;
             }));
@@ -73,9 +66,8 @@
 
           $('#back').on('click',function() {
             $(this).hide();
-            $('div').hide();
+            $('.individual').hide();
             $('#new-tweets').show();
-            lastIndex = 0;
             checkAndUpdate();
 
           });
