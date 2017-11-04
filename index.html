@@ -11,13 +11,14 @@
     <header><h1>Twittler!</h1></header>
     <button id="new-tweets" type="button">Show Newer Tweets..</button>
     <button id="back" type="button">Back To All Users</button>
+    <button id="switchUser" type="button">Switch Current User</button>
+
     <form>
       <input type="text" name="newUserName" placeholder="what's your user name" id="text1">
       <input type="button" value="Go" id="go">
 
       <input type="text" name="newUserTweet" id="text2">
       <input type="button" value="tweet" id="enterTweet">
-      <input type="button" value="Add New User" id="registerUser">
 
     </form>
     
@@ -30,9 +31,10 @@
 
         var appendOneTweet =function (i){       
           var tweet = streams.home[i];
+          var spaces = "   ";
           var $tweet = $('<div class=' + tweet.user +'></div>');
           $tweet.html('<b class="username">@' + tweet.user + '</b>: ' + tweet.message + '<br/>' + tweet.created_at 
-                +'  ' + jQuery.timeago(tweet.created_at));
+                +'<br/>' + '<span class="iii">' + jQuery.timeago(tweet.created_at) + '</span');
           $tweet.appendTo($body);
         }
 
@@ -52,6 +54,8 @@
       $(document).ready(function(){
           
           $('#back').hide(); 
+          $('#text2, #enterTweet, #switchUser').hide();
+
           initialTweets();
 
           $('#new-tweets').on('click',function(){
@@ -77,10 +81,11 @@
             $('#back').show();
             showUserName = false;
 
-            $('#text2, #enterTweet, #registerUser').hide();
-
+            $('#text1, #text2, #enterTweet, #switchUser, #go').hide();
 
           });
+
+          var goclick = false;
 
           $('#back').on('click',function() {
             $(this).hide();
@@ -88,19 +93,20 @@
             $('#new-tweets').show();
             showUserName = true;
             checkAndUpdate();
-            $('#text2, #enterTweet, #registerUser').show();
+            if(goclick)
+              {$('#text2, #enterTweet, #switchUser').show(); $('#text1, #go').hide();}
+            else
+              {$('#text1, #go').show(); $('#text2, #enterTweet, #switchUser').hide();}
 
           });
 
-          $('#text2, #enterTweet, #registerUser').hide();
-          
-
 
           $('#go').on('click',function(){
+            goclick = true;
             $(this).hide();
             $('#text1').hide();
             $('#text2').attr("placeholder","what's on your mind " + $('#text1').val());
-            $('#text2, #enterTweet, #registerUser').show();        
+            $('#text2, #enterTweet, #switchUser').show();        
           })
 
           $('#enterTweet').on('click',function(){
@@ -117,24 +123,15 @@
 
           });
 
-       /*   $('#text2').on('focus',function(){
+          $('#switchUser').on('click',function(){
+            goclick = false;
+            $('#text2, #enterTweet, #switchUser').hide();
+            $('#text1').val('');
+            $('#text2').val('');
+            $('#text1').attr("placeholder","what's your user name ");
+            $('#text1, #go').show();
 
-            $('input[name=newUserTweet').attr("placeholder","what's on your mind " + $('input[name=newUserName]').val());
-          }); */
-
-
-
-      /*    $('input[type=button]').on('click',function(){
-
-            var newUserAdded = {};
-            newUserAdded.user = $('input[name=newUserName]').val();
-            newUserAdded.message = $('input[name=newUserTweet]').val();
-            newUserAdded.created_at = new Date();
-            if(!streams.users.hasOwnProperty(newUserAdded.user))
-              streams.users[newUserAdded.user] =[];
-            addTweet(newUserAdded);
-            console.log(streams.users);
-          }); */
+          });
 
     });
 
