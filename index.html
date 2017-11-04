@@ -3,23 +3,36 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
     <link rel="stylesheet" href="myTwittlerStyle.css">
   </head>
-  <body>
 
+  <body>
     <header><h1>Twittler!</h1></header>
     <button id="new-tweets" type="button">Show Newer Tweets..</button>
     <button id="back" type="button">Back To All Users</button>
+    <form>
+      <input type="text" name="newUserName" placeholder="what's your user name" id="text1">
+      <input type="button" value="Go" id="go">
+
+      <input type="text" name="newUserTweet" id="text2">
+      <input type="button" value="tweet" id="enterTweet">
+      <input type="button" value="Add New User" id="registerUser">
+
+    </form>
     
 
     <script>
   
-        var $body = $('body');        
+        var $body = $('body');     
+        var showUserName = true;
+        jQuery("time.timeago").timeago();   
 
         var appendOneTweet =function (i){       
           var tweet = streams.home[i];
           var $tweet = $('<div class=' + tweet.user +'></div>');
-          $tweet.html('<b class="username">@' + tweet.user + '</b>: ' + tweet.message + '<br/>' + tweet.created_at);
+          $tweet.html('<b class="username">@' + tweet.user + '</b>: ' + tweet.message + '<br/>' + tweet.created_at 
+                +'  ' + jQuery.timeago(tweet.created_at));
           $tweet.appendTo($body);
         }
 
@@ -37,7 +50,7 @@
         }
 
       $(document).ready(function(){
-           
+          
           $('#back').hide(); 
           initialTweets();
 
@@ -45,11 +58,12 @@
               checkAndUpdate();  
           }); 
 
-          
           $(document).on('click','.username',function(event) {
                        
             var p = $(event.target).parent().attr("class");
-            $body.append("<p class='individual'>" + p + "'s timeline...</p>");
+            if(showUserName === true) {
+               $body.append("<p class='individual'>" + p + "'s timeline...</p>");
+            }
 
             $body.append($('div').filter(function() {
               return $(this).attr("class") === p;
@@ -61,6 +75,10 @@
 
             $('#new-tweets').hide();
             $('#back').show();
+            showUserName = false;
+
+            $('#text2, #enterTweet, #registerUser').hide();
+
 
           });
 
@@ -68,9 +86,55 @@
             $(this).hide();
             $('.individual').hide();
             $('#new-tweets').show();
+            showUserName = true;
             checkAndUpdate();
+            $('#text2, #enterTweet, #registerUser').show();
 
           });
+
+          $('#text2, #enterTweet, #registerUser').hide();
+          
+
+
+          $('#go').on('click',function(){
+            $(this).hide();
+            $('#text1').hide();
+            $('#text2').attr("placeholder","what's on your mind " + $('#text1').val());
+            $('#text2, #enterTweet, #registerUser').show();        
+          })
+
+          $('#enterTweet').on('click',function(){
+            var newTweetAdded = {};
+            newTweetAdded.user = $('input[name=newUserName]').val();    
+            newTweetAdded.message = $('input[name=newUserTweet]').val();
+            newTweetAdded.created_at = new Date();
+            if(!streams.users.hasOwnProperty(newTweetAdded.user))
+              streams.users[newTweetAdded.user] =[];
+            addTweet(newTweetAdded);
+            checkAndUpdate();
+            $('#text2').val('');
+            $('#text2').attr("placeholder","what's on your mind " + $('#text1').val());
+
+          });
+
+       /*   $('#text2').on('focus',function(){
+
+            $('input[name=newUserTweet').attr("placeholder","what's on your mind " + $('input[name=newUserName]').val());
+          }); */
+
+
+
+      /*    $('input[type=button]').on('click',function(){
+
+            var newUserAdded = {};
+            newUserAdded.user = $('input[name=newUserName]').val();
+            newUserAdded.message = $('input[name=newUserTweet]').val();
+            newUserAdded.created_at = new Date();
+            if(!streams.users.hasOwnProperty(newUserAdded.user))
+              streams.users[newUserAdded.user] =[];
+            addTweet(newUserAdded);
+            console.log(streams.users);
+          }); */
 
     });
 

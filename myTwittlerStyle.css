@@ -1,5 +1,5 @@
 body {
-  background-color: #add8e6;
+  background-color: #93ffe8;
   text-align: center;
   font: Helvetica;
 } 
@@ -9,28 +9,13 @@ div {
   padding: 6px;
   border: solid;
   border-color: black;
-  border-radius: 5px;
+  border-radius: 15px;
+  border-width: 2px;
   width: 1000px;
   height: 40px;
   margin-left: 20%;
 } 
 
-/*
-div.shawndrost{
-  background-color: green;
-}
-
-div.sharksforcheap{
-  background-color: blue;
-}
-
-div.mracus{
-  background-color: yellow;
-}
-
-div.douglascalhoun{
-  background-color: pink;
-}*/
 
 .username {
   cursor: pointer;
@@ -51,8 +36,9 @@ div.douglascalhoun{
 }
 
 h1 {
-  margin-top: 4%;
+  margin-top: 2%;
   font: italic;
+  font-size: 50px;
 }
 
 button {
@@ -68,4 +54,13 @@ button {
     font-weight: bold;
     height: 50px;
     margin: 20px;
+}
+
+input[type="text"] {
+    width: 30%;
+    font-size:25px;
+}
+
+#text1,#text2 {
+  margin : 20px;
 }
