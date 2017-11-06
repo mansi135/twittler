@@ -3,7 +3,9 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
-    <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
+    <!-- I used the following library directly from http, It works , but to be safe, I downloaded the library in my repo -->
+   <!-- <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script> -->
+    <script src="jquery.timeago.js" type="text/javascript"></script>
     <link rel="stylesheet" href="myTwittlerStyle.css">
   </head>
 
@@ -16,10 +18,8 @@
     <form>
       <input type="text" name="newUserName" placeholder="what's your user name" id="text1">
       <input type="button" value="Go" id="go">
-
       <input type="text" name="newUserTweet" id="text2">
       <input type="button" value="tweet" id="enterTweet">
-
     </form>
     
 
@@ -34,7 +34,7 @@
           var spaces = "   ";
           var $tweet = $('<div class=' + tweet.user +'></div>');
           $tweet.html('<b class="username">@' + tweet.user + '</b>: ' + tweet.message + '<br/>' + tweet.created_at 
-                +'<br/>' + '<span class="iii">' + jQuery.timeago(tweet.created_at) + '</span');
+                +'<br/>' + '<span class="timer">' + jQuery.timeago(tweet.created_at) + '</span');
           $tweet.appendTo($body);
         }
 
@@ -46,15 +46,14 @@
 
         var checkAndUpdate = function() {
           $('div').remove();
-          for(var i = streams.home.length - 1; i >= 0; i--){
+          for(var i = streams.home.length-1; i >= 0; i--){
             appendOneTweet(i);            
           }
         }
 
       $(document).ready(function(){
           
-          $('#back').hide(); 
-          $('#text2, #enterTweet, #switchUser').hide();
+          $('#back, #text2, #enterTweet, #switchUser').hide();
 
           initialTweets();
 
@@ -105,6 +104,9 @@
             goclick = true;
             $(this).hide();
             $('#text1').hide();
+            if($('#text1').val() == '') {
+              $('#text1').val('anonymousUser');
+            }
             $('#text2').attr("placeholder","what's on your mind " + $('#text1').val());
             $('#text2, #enterTweet, #switchUser').show();        
           })
